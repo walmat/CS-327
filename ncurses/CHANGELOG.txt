@@ -1,0 +1,71 @@
+v0.1 - Started generating this dungeon by filling the 80x21 grid with rock.
+--------
+v0.2 - Using an array of integer values (x,y) dimensions for rooms, and have
+       a function that pseudorandomly selects one to attempt to place inside
+       the dungeon within the bounds of (1, 78-x) & (1, 19-y).
+--------
+v0.3 - Created a function to show my progress called print_screen() basically
+       every call to it clears the screen and generates the dungeon.
+--------
+v0.4 - Next project will include figuring out how to eliminate the sleep(1) to
+       avoid duplicate rooms.
+--------
+v0.5 - Ran into a few small problems which created a large problem. First off,
+       I created an array of rooms based on ascending x coordinates (in the
+       event of a tie, ascending y coordinates). My thought behind this was
+       that I would be able to connect them via rooms 1-(n-1) up until n rooms
+       being generated. The problem is displayed here:
+
+           r - room; R = rock; t = tunnel
+       	   [    rr   rr    	     	]
+	   [    rr   rr			]
+	   [    rr   t			]
+	   [    t  rrrr rr		]
+	   [    tttrrrrtrr		]
+	   [		rr		]
+
+       as displayed, I would have to go from room 3 - 4 through room 3, so I
+       will have to draw the tunnel if and only if it doesn't coincide with
+       another room. I feel like I'm making things more complicated than they
+       really are, but we'll see.
+--------
+v0.6 - fixed the room detection and corridor placement by using functions:
+       path_up, path_right, path_down. Also finished the program for what the
+       requirements are as of now.
+--------
+v0.7 - Added two functions into the main to allow the user to load and save a
+       specified file. More about them can be read about in the readme.txt. I
+       also added the check for whether the user inputs --save or --load first
+       and made it universal to always load before it saves.
+--------
+v0.8 - Split the program into separate files according to what they do. Also I
+       managed to place the player character on a random location inside a room
+       and have a distance map to every square, with the condolences for tunnels.
+       Something weird seems to be happening with pathing sometimes where it
+       alternates letters side by side.
+--------
+v0.9 - Implemented monsters and player characters as well as movement based on a
+       priority queue. Have the monster movement still to work on, didn't have
+       time to get as much of this done as I wished I did.
+--------
+v1.0 - Implemented Jeremy's 1.04 code and added functionality for ncurses and
+       movement through that. The controls go:
+       __________________________
+       [7 or y | 8 or k | 9 or u]
+       [------------------------]
+       [4 or h |   PC   | 6 or l]
+       [------------------------]
+       [1 or b | 2 or j | 3 or n]
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+       also a couple other controls got added other than movement:
+
+       '>': traverse down stairs (dungeon gets harder)
+       '<': traverse up stairs (only generated on levels != 0)
+       ' ': rest a full turn
+       'm': brings up a full list of the monsters in the dungeon
+       	    which is controlled by the arrow keys if there are more monsters
+	    than the screen can hold
+	    'Esc' to exit out of list
+       'S': Save to disk and exit game. (quits game for now)
+--------
