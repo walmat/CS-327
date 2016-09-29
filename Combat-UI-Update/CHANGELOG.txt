@@ -1,0 +1,113 @@
+v0.1 - Started generating this dungeon by filling the 80x21 grid with rock.
+--------
+v0.2 - Using an array of integer values (x,y) dimensions for rooms, and have
+       a function that pseudorandomly selects one to attempt to place inside
+       the dungeon within the bounds of (1, 78-x) & (1, 19-y).
+--------
+v0.3 - Created a function to show my progress called print_screen() basically
+       every call to it clears the screen and generates the dungeon.
+--------
+v0.4 - Next project will include figuring out how to eliminate the sleep(1) to
+       avoid duplicate rooms.
+--------
+v0.5 - Ran into a few small problems which created a large problem. First off,
+       I created an array of rooms based on ascending x coordinates (in the
+       event of a tie, ascending y coordinates). My thought behind this was
+       that I would be able to connect them via rooms 1-(n-1) up until n rooms
+       being generated. The problem is displayed here:
+
+           r - room; R = rock; t = tunnel
+       	   [    rr   rr    	     	]
+	   [    rr   rr			]
+	   [    rr   t			]
+	   [    t  rrrr rr		]
+	   [    tttrrrrtrr		]
+	   [		rr		]
+
+       as displayed, I would have to go from room 3 - 4 through room 3, so I
+       will have to draw the tunnel if and only if it doesn't coincide with
+       another room. I feel like I'm making things more complicated than they
+       really are, but we'll see.
+--------
+v0.6 - fixed the room detection and corridor placement by using functions:
+       path_up, path_right, path_down. Also finished the program for what the
+       requirements are as of now.
+--------
+v0.7 - Added two functions into the main to allow the user to load and save a
+       specified file. More about them can be read about in the readme.txt. I
+       also added the check for whether the user inputs --save or --load first
+       and made it universal to always load before it saves.
+--------
+v0.8 - Split the program into separate files according to what they do. Also I
+       managed to place the player character on a random location inside a room
+       and have a distance map to every square, with the condolences for tunnels.
+       Something weird seems to be happening with pathing sometimes where it
+       alternates letters side by side.
+--------
+v0.9 - Implemented monsters and player characters as well as movement based on a
+       priority queue. Have the monster movement still to work on, didn't have
+       time to get as much of this done as I wished I did.
+--------
+v1.0 - Implemented Jeremy's 1.04 code and added functionality for ncurses and
+       movement through that. The controls go:
+       __________________________
+       [7 or y | 8 or k | 9 or u]
+       [------------------------]
+       [4 or h |   PC   | 6 or l]
+       [------------------------]
+       [1 or b | 2 or j | 3 or n]
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+       also a couple other controls got added other than movement:
+
+       '>': traverse down stairs (dungeon gets harder)
+       '<': traverse up stairs (only generated on levels != 0)
+       ' ': rest a full turn
+       'm': brings up a full list of the monsters in the dungeon
+       	    which is controlled by the arrow keys if there are more monsters
+	    than the screen can hold
+	    'Esc' to exit out of list
+       'S': Save to disk and exit game. (quits game for now)
+--------
+v1.1 - Since the previous version of the game the main thing that was added is the Fog
+       of War. Basically the dungeon will be invisible to the PC other than a 3x3 grid
+       around it. This was done with a few functions: init_remem_dungeon(),
+       get_remem_dungeon(), and update_remem_dungeon(). Each of which do exactly what
+       they say they do.
+
+       Another thing was converting all the previous code we had to c++. This was a
+       little tricky at first, but after wrapping the header files in __cplusplus ifs
+       and converting all the structs we had to classes, it became a matter of linking
+       the two files together in a .cpp file.
+
+       Everything works, except for some reason, when I head to the top of the dungeon
+       the whole map becomes black and I couldn't figure out why but it seems like a
+       simple fix.
+--------
+v1.2 - This version of the game I wanted to make the NPC generation a little more
+       arbitrary. I wanted a way for the user to predict the dungeon based on previous
+       experiences. I did so by including a way for the user to implement a monster
+       database in a text file. And in doing so, I parsed the data into individual
+       variables and output that to the screen. Also for this to be possible, I had to
+       change the file extensions from .c -> .cpp and fix the casting warnings/errors.
+--------
+v1.3 - Implemnted objects scattered around the dungeon (broken) and monster generation
+       based off of last week's parsed data.
+--------
+v1.4 - Got a few things done this week. Firstly, I changed the combat system to accept
+       a roll()ed damaged for the PC (based off equipment stats) and regular roll for
+       NPC. Secondly, I added a few other in game function calls listed below:
+       	    w: prompts the user to equip an item in the inventory (will swap if some-
+	       thing is already equipped in that slot).
+	    t: prompts the user to remove an item from the equipment slot (won't remove
+	       if the PC's inventory is full).
+	    d: prompts the user to drop an item in inventory (won't drop if there is
+	       an item below the PC already).
+	    x: prompts the user to select an item to delete from the game entirely.
+	    i: displays the PC's inventory.
+	    e: displays the PC's equipment.
+	    I: inspects an item in the PC's inventory to display the description.
+
+       a couple of background things are happening with a few of these calls that I'll
+       mention more in the README.txt.
+--------
