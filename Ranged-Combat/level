@@ -1,0 +1,8 @@
+dungeon.h:#define mappair(pair) (d->map[pair[dim_y]][pair[dim_x]])
+dungeon.h:#define mapxy(x, y) (d->map[y][x])
+dungeon.h:#define hardnesspair(pair) (d->hardness[pair[dim_y]][pair[dim_x]])
+dungeon.h:#define hardnessxy(x, y) (d->hardness[y][x])
+dungeon.h:#define charpair(pair) (d->charmap[pair[dim_y]][pair[dim_x]])
+dungeon.h:#define charxy(x, y) (d->charmap[y][x])
+dungeon.h:#define objpair(pair) (d->objmap[pair[dim_y]][pair[dim_x]])
+dungeon.h:#define objxy(x, y) (d->objmap[y][x])
